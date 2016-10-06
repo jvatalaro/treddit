@@ -25,5 +25,8 @@
   <%= @post.user_id %>
 </p>
 
+<%= link_to '+', up_vote_path(@post) %>
+<%= link_to '-', down_vote_path(@post) %>
+
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
