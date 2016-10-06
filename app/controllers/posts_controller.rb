@@ -15,6 +15,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @post.score = 0
   end
 
   # GET /posts/1/edit
@@ -70,5 +71,13 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:title, :author, :post_entry, :score, :user_id)
+    end
+
+    def up_vote
+      Comment.find(params[:id]).score += 1
+    end
+
+    def down_vote
+      Comment.find(params[:id]).score -= 1
     end
 end
