@@ -74,8 +74,10 @@ class PostsController < ApplicationController
     end
 
     def up_vote
+      Comment.find(params[:id]).score += 1
     end
 
     def down_vote
+      Comment.find(params[:id]).score -= 1
     end
 end
