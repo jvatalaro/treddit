@@ -61,6 +61,14 @@ class CommentsController < ApplicationController
     end
   end
 
+
+  def create_comment
+    Comment.create(author: params[:author], user_id: params[:user_id], post_id: params[:post_id],
+     comment_extry: params[:comment_extry])
+    redirect_to :back
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
