@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.order(score: :desc)
   end
 
   # GET /posts/1
@@ -14,8 +14,9 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
+    puts "*********"
     @post = Post.new
-    @post.score = 0
+    @post.update(score: 0)
   end
 
   # GET /posts/1/edit
@@ -62,6 +63,20 @@ class PostsController < ApplicationController
     end
   end
 
+
+    def up_vote
+      post = Post.find(params[:id])
+      post.update(score: post.score + 1)
+      redirect_to :back
+    end
+
+    def down_vote
+      post = Post.find(params[:id])
+      post.update(score: post.score - 1)
+      redirect_to :back
+    end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -73,11 +88,4 @@ class PostsController < ApplicationController
       params.require(:post).permit(:title, :author, :post_entry, :score, :user_id)
     end
 
-    def up_vote
-      Comment.find(params[:id]).score += 1
-    end
-
-    def down_vote
-      Comment.find(params[:id]).score -= 1
-    end
 end

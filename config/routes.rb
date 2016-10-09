@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :users
   resources :comments
   resources :posts
@@ -8,5 +9,6 @@ Rails.application.routes.draw do
 
   get 'up_vote' => 'posts#up_vote'
   get 'down_vote' => 'posts#down_vote'
+  post 'create_comment' => 'comments#create_comment'
 
   end
