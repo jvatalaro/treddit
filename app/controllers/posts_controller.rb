@@ -26,7 +26,9 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
+    # puts "*********"
     @post = Post.new(post_params)
+    @post.update(score: 0)
 
     respond_to do |format|
       if @post.save
@@ -85,7 +87,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :author, :post_entry, :score, :user_id)
+      params.require(:post).permit(:title, :author, :post_entry, :score, :user_id, :link_path)
     end
 
 end

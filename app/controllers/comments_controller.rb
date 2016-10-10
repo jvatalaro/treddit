@@ -63,7 +63,7 @@ class CommentsController < ApplicationController
 
 
   def create_comment
-    Comment.create(author: params[:author], user_id: params[:user_id], post_id: params[:post_id],
+    Comment.create(author: "", user_id: params[:user_id], post_id: params[:post_id],
      comment_extry: params[:comment_extry])
     redirect_to :back
   end

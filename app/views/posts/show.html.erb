@@ -1,50 +1,82 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
 
-<p>
-  <strong>Author:</strong>
-  <%= @post.author %>
-</p>
+        <p>
+          <strong>Title:</strong>
+          <%#= @post.title %>
+          <%= link_to @post.title.to_s, @post.link_path %>
+        </p>
 
-<p>
-  <strong>Post entry:</strong>
-  <%= @post.post_entry %>
-</p>
+        <p>
+          <strong>Author:</strong>
+          <%= @post.user.username %>
+        </p>
 
-<p>
-  <strong>Score:</strong>
-  <%= @post.score %>
-</p>
+        <p>
+          <strong>Posted at:</strong>
+          <%= @post.created_at.strftime("%m-%d-%Y %r %Z") %>
+        </p>
 
-<p>
+        <p>
+          <strong>Updated at:</strong>
+          <%= @post.updated_at.strftime("%m-%d-%Y %r %Z") %>
+        </p>
+
+        <p>
+          <strong>Post entry:</strong>
+          <%= @post.post_entry %>
+        </p>
+
+        <p>
+          <strong>Score:</strong>
+          <%= @post.score %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <p>
   <strong>User:</strong>
-  <%= @post.user.username %>
-</p>
+  <%#= @post.user.username %>
+</p> -->
 
 <%= link_to '+', up_vote_path(id: @post.id) %>
 <%= link_to '-', down_vote_path(id: @post.id) %>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<% if @post.user.id == current_user.id %>
+  <%= link_to 'Edit', edit_post_path(@post) %> | 
+<% end %>
 <%= link_to 'Back', posts_path %>
 
 <%= form_tag(create_comment_path) do %>
   <%= hidden_field_tag :post_id, @post.id %>
+  <%= hidden_field_tag :user_id, current_user.id %>
   <%= text_area_tag :comment_extry, nil, placeholder: "Leave a comment."%>
   <%= submit_tag "Submit" %>
 <% end %>
 
-<% @post.comments.each do |comment| %>
-  <p>
-    <%= comment.comment_extry%>
-  </p>
-  <p>
-    Created at: <%= comment.created_at %>
-  </p>
-  <p>
-    Updated at: <%= comment.updated_at %>
-  </p>
-<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-footer">
+        <% @post.comments.each do |comment| %>
+          <p>
+            <%= comment.user.username %> said...<br /><%= comment.comment_extry%>
+          </p>
+          <p>
+            Created at: <%= comment.created_at.strftime("%m-%d-%Y %r %Z") %>
+          </p>
+          <p>
+            Updated at: <%= comment.updated_at.strftime("%m-%d-%Y %r %Z") %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,36 +2,53 @@
 
 <h1>Posts</h1>
 
-<table>
+<!-- <table>
   <thead>
     <tr>
       <th>Title</th>
       <th>Author</th>
       <th>Post entry</th>
-      <th>Score</th>
+      <th>Score</th> -->
       <!-- <th>User</th> -->
-      <th colspan="3"></th>
+  <!--     <th colspan="3"></th>
     </tr>
   </thead>
 
   
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.title %></td>
-        <!-- <td><%= post.author %></td> -->
-        <td><%= post.user.username %></td>
-        <td><%= post.post_entry %></td>
-        <td><%= post.score %></td>
-        <!-- <td><%= post.user_id %></td> -->
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <tbody> -->
+
+<%= link_to 'New Post', new_post_path %>
+
+<div class="row">
+  <% @posts.each do |post| %>
+    <div class="col-md-10 col-md-offset-1">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <!-- <td><%= post.title %></td> -->
+          <p>Post Score: <%= post.score %></p>
+          <p><%= link_to post.title, post.link_path %></p>
+          <p>Created by: <%= post.user.username %></p>
+          <p>Created at: <%= post.created_at.strftime("%m-%d-%Y %r %Z") %> </p>
+          <p>Updated at: <%= post.updated_at.strftime("%m-%d-%Y %r %Z") %> </p>
+          <!-- <td><%= post.author %></td> -->
+        </div>
+        <div class="panel-body">
+        <%= post.post_entry %>
+        </div>
+        <div class="panel-footer">
+          <%= link_to 'Show', post %>
+          <% if current_user.id == post.user.id %>
+            <%= link_to 'Edit', edit_post_path(post) %>
+            <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+  <!-- </tbody>
+</table> -->
 
 <br>
 
-<%= link_to 'New Post', new_post_path %>
+
